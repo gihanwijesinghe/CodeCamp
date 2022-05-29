@@ -10,7 +10,13 @@ namespace CodeCamp
     {
         public void Execute()
         {
-            Console.WriteLine("Execute  ");
+            var algebra = new AlgebraFucntions();
+
+            var val1 = algebra.GetSumOfArithmeticSeries(100);
+            var val2 = algebra.GetSumOfSquareSeries(100);
+
+            var result = (val1 * val1) - val2;
+            Console.WriteLine("Result  "+ result);
         }
     }
 }
