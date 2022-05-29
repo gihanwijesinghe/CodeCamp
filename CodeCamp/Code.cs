@@ -11,6 +11,23 @@ namespace CodeCamp
         public void Execute()
         {
             Console.WriteLine("Execute  ");
+            var algo = new Algorithms();
+            
+            var term = 2;
+            var primeCount = 0;
+            var maxTerm = 10001;
+
+            //2,3,5,7,11,13
+            while (primeCount < maxTerm)
+            {
+                var reslt = algo.IsPrimeNumber(term);
+                if (reslt)
+                {
+                    primeCount++;
+                }
+                term++;
+            }
+            Console.WriteLine("Result  " +(term-1));
         }
     }
 }
