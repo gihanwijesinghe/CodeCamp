@@ -25,5 +25,38 @@ namespace CodeCamp
             //(a)*(1-r^n)/(1-r)
             return (firstTerm * (1 - (int)Math.Pow(ratio, terms))) / (1 - ratio);
         }
+
+        public long GetProductOfArray(int [] array)
+        {
+            if(array == null || array.Length == 0)
+            {
+                return 0;
+            }
+
+            long result = 1;
+            foreach (int i in array)
+            {
+                result *= i;
+            }
+            
+            return result;
+        }
+
+        public long GetProductOfArray(string s)
+        {
+            if (s == null || s.Length == 0)
+            {
+                return 0;
+            }
+
+            long result = 1;
+            foreach (var i in s)
+            {
+                var intValue = int.Parse(i.ToString());
+                result *= intValue;
+            }
+
+            return result;
+        }
     }
 }

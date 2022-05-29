@@ -56,23 +56,12 @@ namespace CodeCamp
 
             var divider = 2;
             var nextDivider = value / 2;
-            //var primefactors = new Dictionary<int, int>();
 
             while (divider <= nextDivider)
             {
                 if (value % divider == 0)
                 {
                     return false;
-                    //if (primefactors.ContainsKey(divider))
-                    //{
-                    //    primefactors[divider] = primefactors[divider] + 1;
-                    //}
-                    //else
-                    //{
-                    //    primefactors.Add(divider, 1);
-                    //}
-                    //value = value / divider;
-                    //nextDivider = value / divider;
                 }
                 else
                 {
@@ -82,16 +71,6 @@ namespace CodeCamp
             }
 
             return true;
-            //if (primefactors.ContainsKey(value))
-            //{
-            //    primefactors[value] = primefactors[value] + 1;
-            //}
-            //else
-            //{
-            //    primefactors.Add(value, 1);
-            //}
-
-            //return primefactors;
         }
 
         public int GetLeastCommonMultiple(int[] array)
