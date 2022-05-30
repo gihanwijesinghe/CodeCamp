@@ -10,49 +10,116 @@ namespace CodeCamp
     {
         public void Execute()
         {
-            var stringSeparated = "4 3 2 1";
-            var q = new List<int>();
-            foreach (var item in stringSeparated.Split(" "))
+            var threshold = 25;
+            var bootingStringSeparated = "3 6 1 3 4 1 1 1 1 1";
+            var processingStringSeparated = "2 1 3 4 5 1 1 1 1 1";
+
+            //var threshold = 33;
+            //var bootingStringSeparated = "8 8 10 9 12";
+            //var processingStringSeparated = "4 1 4 5 3";
+
+            //var threshold = 6;
+            //var bootingStringSeparated = "10 8 7";
+            //var processingStringSeparated = "11 12 11";
+
+
+            var bootingPower = new List<int>();
+            var processingPower = new List<int>();
+
+            foreach (var item in bootingStringSeparated.Split(" "))
             {
-                q.Add(int.Parse(item.ToString()));
+                bootingPower.Add(int.Parse(item.ToString()));
+
+            }
+            foreach (var item in processingStringSeparated.Split(" "))
+            {
+                processingPower.Add(int.Parse(item.ToString()));
 
             }
 
-            Console.WriteLine("Execute  ");
+            var maxProcessorsWithValueOne = (int)Math.Floor(Math.Sqrt(threshold - 1));
 
-            var total = 0;
+            var guessValue = (maxProcessorsWithValueOne+1) / 2;
 
-            var previou = q[0];
-            var groupCount = 0;
-            for(var i = 0; i < q.Count; i++)
+            var minPivot = 0;
+            var maxPivot = maxProcessorsWithValueOne;
+
+            var exactValue = 0;
+
+            while (maxPivot - minPivot > 0)
             {
-                if(previou-q[i]  == 1)
+                var bootingQueue = new Queue<int>();
+                var processingQueue = new Queue<int>();
+
+                var isClusterConsumable = false;
+
+                for(int i = 0; i < bootingPower.Count(); i++)
                 {
-                    groupCount++;
-                }
-                else 
-                {
-                    if(groupCount > 0)
+                    bootingQueue.Enqueue(bootingPower[i]);
+                    processingQueue.Enqueue(processingPower[i]);
+
+                    if(bootingQueue.Count() > guessValue)
                     {
-                        var innerCout = ((groupCount + 1) * (groupCount + 2) / 2)-(groupCount+1);
-                        total += innerCout;
-                        groupCount = 0;
+                        bootingQueue.Dequeue();
+                        processingQueue.Dequeue();
                     }
-                    
-                    
+
+                    if(bootingQueue.Count() == guessValue)
+                    {
+                        var bootingMax = bootingQueue.Max();
+                        var processingSum = processingQueue.Sum();
+
+                        var newPower = bootingMax + (processingSum*guessValue);
+
+                        if(newPower <= threshold)
+                        {
+                            isClusterConsumable = true;
+                            exactValue = guessValue;
+                            minPivot = guessValue;
+
+                            if (maxPivot == minPivot)
+                            {
+                                break;
+                            }
+
+                            if (maxPivot - minPivot == 1)
+                            {
+                                if (maxPivot != maxProcessorsWithValueOne)
+                                {
+                                    minPivot = maxPivot;
+                                    break;
+                                }
+                                
+                            }
+                            guessValue = minPivot + (((maxPivot + 1) - minPivot) / 2);
+                            
+
+                            break;
+                        }
+                        
+                    }
                 }
-                previou = q[i];
+
+                if (!isClusterConsumable)
+                {
+                    maxPivot = guessValue;
+
+                    if(maxPivot - minPivot == 1)
+                    {
+                        maxPivot = minPivot;
+                    }
+                    else
+                    {
+                        guessValue = minPivot + (((maxPivot + 1) - minPivot) / 2);
+                        exactValue = guessValue;
+                    }
+                }
             }
 
-            if (groupCount > 0)
-            {
-                var innerCout = ((groupCount + 1) * (groupCount + 2) / 2) - (groupCount + 1);
-                total += innerCout;
-            }
 
-            total += q.Count();
 
-            Console.WriteLine("total  "+total);
+            Console.WriteLine("Result  " + exactValue);
+
         }
     }
 }
