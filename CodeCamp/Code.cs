@@ -11,6 +11,22 @@ namespace CodeCamp
         public void Execute()
         {
             Console.WriteLine("Execute  ");
+
+            var threshold = 2000000;
+
+            var  algo = new Algorithms();
+            long sum = 0;
+
+            for(int i = 2; i < threshold; i++)
+            {
+                var isPrimeNumber = algo.IsPrimeNumber(i);
+                if (isPrimeNumber)
+                {
+                    sum += i;
+                }
+            }
+
+            Console.WriteLine("Result  " + sum);
         }
     }
 }
